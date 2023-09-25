@@ -44,7 +44,7 @@ def main():
         return data
 
     # Fetch data
-    subreddit_data = fetch_posts_from_subreddit(subreddit_name, 1000)
+    subreddit_data = fetch_posts_from_subreddit(subreddit_name)
 
     # Generate a timestamp in the format YYYYMMDD_HHMMSS
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
