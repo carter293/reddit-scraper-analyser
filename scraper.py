@@ -12,12 +12,12 @@ client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 user_agent = os.getenv("USER_AGENT")
 
-subreddit_name = 'productivity'
+subreddit_name = 'excel'
 
 def main():
     reddit = praw.Reddit(client_id=client_id, client_secret=client_secret, user_agent=user_agent)
 
-    def fetch_posts_from_subreddit(subreddit_name, limit=10):
+    def fetch_posts_from_subreddit(subreddit_name, limit=500):
         subreddit = reddit.subreddit(subreddit_name)
         
         # List to store each post and its comments
@@ -31,26 +31,19 @@ def main():
                 'score': post.score,
                 'num_comments': post.num_comments,
                 'created_utc' : post.created_utc,
-                'comments': []
             }
-            # Fetching the top-level comments of each post
-            post.comments.replace_more(limit=None)  # Ensures all top-level comments are fetched
-            for index, comment in enumerate(post.comments):
-                post_data['comments'].append(comment.body)
-                if index == 5:
-                    break
             data.append(post_data)
         
         return data
 
     # Fetch data
-    subreddit_data = fetch_posts_from_subreddit(subreddit_name)
+    subreddit_data = fetch_posts_from_subreddit(subreddit_name,500)
 
     # Generate a timestamp in the format YYYYMMDD_HHMMSS
     timestamp = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
 
     # Append the timestamp to the filename
-    filename = f'subreddit_data_{timestamp}.json'
+    filename = f'subreddit_data_{subreddit_name}_{timestamp}.json'
 
     # Save to a JSON file
     with open(filename, 'w') as outfile:
