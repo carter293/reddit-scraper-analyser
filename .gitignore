@@ -1,5 +1,6 @@
 __pycache__
 .env.local
-*.txt
 *.json
 *.html
+chatgpt_outputs
+notes.md
